@@ -176,6 +176,11 @@ class AdminController extends Controller
         return redirect()->route('admin.packages')->with('success', 'Package deleted.');
     }
 
+    public function branding()
+    {
+        return view('admin.settings.branding');
+    }
+
     private function syncFeatures(Package $package, string $detailsText): void
     {
         $package->features()->delete();

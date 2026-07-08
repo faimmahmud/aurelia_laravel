@@ -73,6 +73,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/packages/{id}/edit', [AdminController::class, 'packagesEdit'])->name('admin.packages.edit');
     Route::put('/admin/packages/{id}', [AdminController::class, 'packagesUpdate'])->name('admin.packages.update');
     Route::delete('/admin/packages/{id}', [AdminController::class, 'packagesDestroy'])->name('admin.packages.destroy');
+    Route::get('/admin/settings/branding', [AdminController::class, 'branding'])
+        ->name('admin.settings.branding');
+        Route::get('/admin/settings/branding', [AdminController::class, 'branding'])
+    ->name('admin.settings.branding');
+    Route::post('/admin/settings/branding', [AdminController::class, 'brandingUpdate'])
+    ->name('admin.settings.branding.update');
 });
 
 require __DIR__ . '/auth.php';
