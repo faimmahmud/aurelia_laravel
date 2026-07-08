@@ -36,6 +36,14 @@ are unchanged from the original site — only the plumbing moved to Laravel.
     php artisan key:generate
     # set DB_DATABASE/DB_USERNAME/DB_PASSWORD in .env (mysql, tourism_FM)
     php artisan migrate
+
+Seed a demo admin, a demo user, and the original 6 tour packages:
+
+    php artisan db:seed
+
+Demo admin login: `admin@demo.com` / `admin123`
+Demo user login: `user@demo.com` / `user1234`
+
     php artisan storage:link
 
 Static assets (CSS/JS/images) are already in `public/assets` — no Vite build

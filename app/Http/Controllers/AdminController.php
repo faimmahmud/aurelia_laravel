@@ -32,6 +32,13 @@ class AdminController extends Controller
         return view('admin.bookings', compact('bookings'));
     }
 
+    public function bookingShow(string $id)
+    {
+        $booking = Booking::with(['notifications', 'auditLogs'])->findOrFail($id);
+
+        return view('admin.booking-view', compact('booking'));
+    }
+
     public function updateStatus(Request $request, string $id)
     {
         $request->validate([

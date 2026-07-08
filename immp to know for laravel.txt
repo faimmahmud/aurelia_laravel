@@ -1,0 +1,9 @@
+1.***to create website we can see already live demo.it can help to see and generate how to continue and make fullstack website***
+link: https://codecanyon.net/?srsltid=AfmBOorV0l8OMrdaS2H7o08jm9HcRuPIq-3B8gWrAFauBN0VKITQiF97
+
+2.***it helps to continue Laravel fix bug and error***
+we can use Laravel (tinker) to check its properly working or not properly or any process working or not.
+
+https://medium.com/@jayprakashj/exploring-laravel-tinker-a-comprehensive-guide-6b8fb1593bb9?authuser=0
+
+2.

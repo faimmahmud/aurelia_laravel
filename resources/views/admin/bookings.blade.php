@@ -34,6 +34,7 @@
             <td><span class="badge bg-{{ $b->paymentBadgeClass() }}">{{ $b->payment_status }}</span></td>
             <td><span class="badge bg-{{ $b->statusBadgeClass() }}">{{ $b->booking_status }}</span></td>
             <td>
+              <a href="{{ route('admin.bookings.show', $b->id) }}" class="btn btn-sm btn-outline-dark mb-1">View</a>
               <form action="{{ route('admin.bookings.update', $b->id) }}" method="post" class="d-flex gap-1">
                 @csrf
                 @method('PATCH')

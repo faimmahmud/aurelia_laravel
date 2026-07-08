@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
+    Route::get('/admin/bookings/{id}', [AdminController::class, 'bookingShow'])->name('admin.bookings.show');
     Route::patch('/admin/bookings/{id}', [AdminController::class, 'updateStatus'])->name('admin.bookings.update');
     Route::delete('/admin/bookings/{id}', [AdminController::class, 'destroyBooking'])->name('admin.bookings.destroy');
 
@@ -73,6 +74,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/packages/{id}', [AdminController::class, 'packagesUpdate'])->name('admin.packages.update');
     Route::delete('/admin/packages/{id}', [AdminController::class, 'packagesDestroy'])->name('admin.packages.destroy');
 });
-
 
 require __DIR__ . '/auth.php';
