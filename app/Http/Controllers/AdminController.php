@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\BookingAuditLog;
 use App\Models\Package;
 use App\Models\PackageFeature;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -179,6 +180,19 @@ class AdminController extends Controller
     public function branding()
     {
         return view('admin.settings.branding');
+    }
+
+    public function brandingUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:150',
+            'company_tagline' => 'nullable|string|max:255',
+        ]);
+
+        Setting::set('branding.company_name', $validated['company_name']);
+        Setting::set('branding.company_tagline', $validated['company_tagline'] ?? '');
+
+        return redirect()->back()->with('success', 'Branding settings updated successfully.');
     }
 
     private function syncFeatures(Package $package, string $detailsText): void
