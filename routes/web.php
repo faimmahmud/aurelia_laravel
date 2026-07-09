@@ -61,24 +61,49 @@ Route::middleware('auth')->group(function () {
 */
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
-    Route::get('/admin/bookings/{id}', [AdminController::class, 'bookingShow'])->name('admin.bookings.show');
-    Route::patch('/admin/bookings/{id}', [AdminController::class, 'updateStatus'])->name('admin.bookings.update');
-    Route::delete('/admin/bookings/{id}', [AdminController::class, 'destroyBooking'])->name('admin.bookings.destroy');
 
-    Route::get('/admin/packages', [AdminController::class, 'packages'])->name('admin.packages');
-    Route::get('/admin/packages/create', [AdminController::class, 'packagesCreate'])->name('admin.packages.create');
-    Route::post('/admin/packages', [AdminController::class, 'packagesStore'])->name('admin.packages.store');
-    Route::get('/admin/packages/{id}/edit', [AdminController::class, 'packagesEdit'])->name('admin.packages.edit');
-    Route::put('/admin/packages/{id}', [AdminController::class, 'packagesUpdate'])->name('admin.packages.update');
-    Route::delete('/admin/packages/{id}', [AdminController::class, 'packagesDestroy'])->name('admin.packages.destroy');
+    // Dashboard
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
+        ->name('admin.dashboard');
+
+    // Bookings
+    Route::get('/admin/bookings', [AdminController::class, 'bookings'])
+        ->name('admin.bookings');
+
+    Route::get('/admin/bookings/{id}', [AdminController::class, 'bookingShow'])
+        ->name('admin.bookings.show');
+
+    Route::patch('/admin/bookings/{id}', [AdminController::class, 'updateStatus'])
+        ->name('admin.bookings.update');
+
+    Route::delete('/admin/bookings/{id}', [AdminController::class, 'destroyBooking'])
+        ->name('admin.bookings.destroy');
+
+    // Packages
+    Route::get('/admin/packages', [AdminController::class, 'packages'])
+        ->name('admin.packages');
+
+    Route::get('/admin/packages/create', [AdminController::class, 'packagesCreate'])
+        ->name('admin.packages.create');
+
+    Route::post('/admin/packages', [AdminController::class, 'packagesStore'])
+        ->name('admin.packages.store');
+
+    Route::get('/admin/packages/{id}/edit', [AdminController::class, 'packagesEdit'])
+        ->name('admin.packages.edit');
+
+    Route::put('/admin/packages/{id}', [AdminController::class, 'packagesUpdate'])
+        ->name('admin.packages.update');
+
+    Route::delete('/admin/packages/{id}', [AdminController::class, 'packagesDestroy'])
+        ->name('admin.packages.destroy');
+
+    // Organization & Settings
     Route::get('/admin/settings/branding', [AdminController::class, 'branding'])
         ->name('admin.settings.branding');
-        Route::get('/admin/settings/branding', [AdminController::class, 'branding'])
-    ->name('admin.settings.branding');
+
     Route::post('/admin/settings/branding', [AdminController::class, 'brandingUpdate'])
-    ->name('admin.settings.branding.update');
+        ->name('admin.settings.branding.update');
 });
 
 require __DIR__ . '/auth.php';
