@@ -31,7 +31,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.settings.branding.update') }}" method="POST">
+        <form action="{{ route('admin.settings.branding.update') }}" method="POST" enctype="multipart/form-data">
 
             @csrf
 
@@ -46,28 +46,77 @@
                 <div class="card-body">
 
                     <div class="mb-4">
-
                         <label class="form-label">
-
                             Company Name
-
                         </label>
 
                         <input type="text" name="company_name" class="form-control"
                             value="{{ old('company_name', \App\Models\Setting::get('branding.company_name')) }}" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">
+                            Company Tagline
+                        </label>
+
+                        <input type="text" name="company_tagline" class="form-control"
+                            value="{{ old('company_tagline', \App\Models\Setting::get('branding.company_tagline')) }}">
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mb-4">
+                        Company Logo
+                    </h5>
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Logo
+                        </label>
+
+                        @if (\App\Models\Setting::get('branding.logo'))
+                            <div class="mb-3">
+                                <img src="{{ asset('storage/' . \App\Models\Setting::get('branding.logo')) }}"
+                                    style="height:70px" class="img-thumbnail">
+                            </div>
+                        @endif
+
+                        <input type="file" name="logo" class="form-control">
 
                     </div>
 
                     <div class="mb-4">
 
                         <label class="form-label">
-
-                            Company Tagline
-
+                            Dark Logo
                         </label>
 
-                        <input type="text" name="company_tagline" class="form-control"
-                            value="{{ old('company_tagline', \App\Models\Setting::get('branding.company_tagline')) }}">
+                        @if (\App\Models\Setting::get('branding.dark_logo'))
+                            <div class="mb-3">
+                                <img src="{{ asset('storage/' . \App\Models\Setting::get('branding.dark_logo')) }}"
+                                    style="height:70px" class="img-thumbnail">
+                            </div>
+                        @endif
+
+                        <input type="file" name="dark_logo" class="form-control">
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Favicon
+                        </label>
+
+                        @if (\App\Models\Setting::get('branding.favicon'))
+                            <div class="mb-3">
+                                <img src="{{ asset('storage/' . \App\Models\Setting::get('branding.favicon')) }}"
+                                    style="height:40px" class="img-thumbnail">
+                            </div>
+                        @endif
+
+                        <input type="file" name="favicon" class="form-control">
 
                     </div>
 
@@ -75,10 +124,8 @@
 
                 <div class="card-footer bg-white">
 
-                    <button class="btn btn-primary">
-
+                    <button type="submit" class="btn btn-primary">
                         Save Branding
-
                     </button>
 
                 </div>

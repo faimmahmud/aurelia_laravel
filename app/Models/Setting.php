@@ -16,10 +16,13 @@ class Setting extends Model
     ];
 
     /**
-     * Get a setting value by key.
-     *
-     * Example:
-     * Setting::get('branding.site_name');
+     * If your database table is company_settings,
+     * uncomment the line below.
+     */
+    // protected $table = 'company_settings';
+
+    /**
+     * Get setting by key.
      */
     public static function get(string $key, $default = null)
     {
@@ -29,21 +32,20 @@ class Setting extends Model
     }
 
     /**
-     * Create or update a setting.
-     *
-     * Example:
-     * Setting::set('branding.site_name', 'Aurelia Travel');
+     * Save or update setting.
      */
     public static function set(string $key, $value, string $type = 'text'): void
     {
         $group = explode('.', $key)[0] ?? 'general';
 
         static::updateOrCreate(
-            ['key' => $key],
             [
-                'group'    => $group,
-                'value'    => $value,
-                'type'     => $type,
+                'key' => $key,
+            ],
+            [
+                'group' => $group,
+                'value' => $value,
+                'type' => $type,
                 'autoload' => true,
             ]
         );
@@ -52,10 +54,7 @@ class Setting extends Model
     }
 
     /**
-     * Get all settings for a group.
-     *
-     * Example:
-     * Setting::group('branding');
+     * Get all settings by group.
      */
     public static function group(string $group)
     {
@@ -64,7 +63,7 @@ class Setting extends Model
     }
 
     /**
-     * Clear all cached settings.
+     * Clear cached settings.
      */
     public static function clearCache(): void
     {

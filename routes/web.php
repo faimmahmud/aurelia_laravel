@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public / Frontend Routes (Aurelia Travel)
+| Public Routes
 |--------------------------------------------------------------------------
 */
 
@@ -19,7 +19,7 @@ Route::get('/world', [FrontendController::class, 'world'])->name('world');
 
 /*
 |--------------------------------------------------------------------------
-| Booking (auth required, same as original login-gated booking.php)
+| Booking
 |--------------------------------------------------------------------------
 */
 
@@ -34,13 +34,14 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', function () {
-    if (auth()->user()->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('dashboard');
+    })->name('dashboard');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -56,54 +57,59 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Admin
+| Admin Panel
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-    // Dashboard
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
-        ->name('admin.dashboard');
+        /*
+        |--------------------------------------------------------------------------
+        | Dashboard
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
-    // Bookings
-    Route::get('/admin/bookings', [AdminController::class, 'bookings'])
-        ->name('admin.bookings');
+        /*
+        |--------------------------------------------------------------------------
+        | Bookings
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/bookings', [AdminController::class, 'bookings'])->name('bookings');
+        Route::get('/bookings/{id}', [AdminController::class, 'bookingShow'])->name('bookings.show');
+        Route::patch('/bookings/{id}', [AdminController::class, 'updateStatus'])->name('bookings.update');
+        Route::delete('/bookings/{id}', [AdminController::class, 'destroyBooking'])->name('bookings.destroy');
 
-    Route::get('/admin/bookings/{id}', [AdminController::class, 'bookingShow'])
-        ->name('admin.bookings.show');
+        /*
+        |--------------------------------------------------------------------------
+        | Packages
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/packages', [AdminController::class, 'packages'])->name('packages');
+        Route::get('/packages/create', [AdminController::class, 'packagesCreate'])->name('packages.create');
+        Route::post('/packages', [AdminController::class, 'packagesStore'])->name('packages.store');
+        Route::get('/packages/{id}/edit', [AdminController::class, 'packagesEdit'])->name('packages.edit');
+        Route::put('/packages/{id}', [AdminController::class, 'packagesUpdate'])->name('packages.update');
+        Route::delete('/packages/{id}', [AdminController::class, 'packagesDestroy'])->name('packages.destroy');
 
-    Route::patch('/admin/bookings/{id}', [AdminController::class, 'updateStatus'])
-        ->name('admin.bookings.update');
+        /*
+        |--------------------------------------------------------------------------
+        | Branding Settings
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/settings/branding', [AdminController::class, 'branding'])->name('settings.branding');
+        Route::post('/settings/branding', [AdminController::class, 'brandingUpdate'])->name('settings.branding.update');
 
-    Route::delete('/admin/bookings/{id}', [AdminController::class, 'destroyBooking'])
-        ->name('admin.bookings.destroy');
-
-    // Packages
-    Route::get('/admin/packages', [AdminController::class, 'packages'])
-        ->name('admin.packages');
-
-    Route::get('/admin/packages/create', [AdminController::class, 'packagesCreate'])
-        ->name('admin.packages.create');
-
-    Route::post('/admin/packages', [AdminController::class, 'packagesStore'])
-        ->name('admin.packages.store');
-
-    Route::get('/admin/packages/{id}/edit', [AdminController::class, 'packagesEdit'])
-        ->name('admin.packages.edit');
-
-    Route::put('/admin/packages/{id}', [AdminController::class, 'packagesUpdate'])
-        ->name('admin.packages.update');
-
-    Route::delete('/admin/packages/{id}', [AdminController::class, 'packagesDestroy'])
-        ->name('admin.packages.destroy');
-
-    // Organization & Settings
-    Route::get('/admin/settings/branding', [AdminController::class, 'branding'])
-        ->name('admin.settings.branding');
-
-    Route::post('/admin/settings/branding', [AdminController::class, 'brandingUpdate'])
-        ->name('admin.settings.branding.update');
-});
+        /*
+        |--------------------------------------------------------------------------
+        | Contact Settings
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/settings/contact', [AdminController::class, 'contact'])->name('settings.contact');
+        Route::post('/settings/contact', [AdminController::class, 'contactUpdate'])->name('settings.contact.update');
+    }); // Admin Panel Group Ends Here
 
 require __DIR__ . '/auth.php';

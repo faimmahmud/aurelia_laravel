@@ -8,6 +8,7 @@ use App\Models\Package;
 use App\Models\PackageFeature;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
@@ -177,6 +178,9 @@ class AdminController extends Controller
         return redirect()->route('admin.packages')->with('success', 'Package deleted.');
     }
 
+    // ==========================================
+    // Branding Settings
+    // ==========================================
     public function branding()
     {
         return view('admin.settings.branding');
@@ -187,14 +191,66 @@ class AdminController extends Controller
         $validated = $request->validate([
             'company_name' => 'required|string|max:150',
             'company_tagline' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:4096',
+            'dark_logo' => 'nullable|image|mimes:jpg,jpeg,png,webp,svg|max:4096',
+            'favicon' => 'nullable|image|mimes:png,ico,svg|max:2048',
         ]);
 
         Setting::set('branding.company_name', $validated['company_name']);
         Setting::set('branding.company_tagline', $validated['company_tagline'] ?? '');
 
+        $uploads = [
+            'logo' => 'branding.logo',
+            'dark_logo' => 'branding.dark_logo',
+            'favicon' => 'branding.favicon',
+        ];
+
+        foreach ($uploads as $field => $settingKey) {
+            if ($request->hasFile($field)) {
+                $old = Setting::get($settingKey);
+                if ($old && Storage::disk('public')->exists($old)) {
+                    Storage::disk('public')->delete($old);
+                }
+                $path = $request->file($field)->store('branding', 'public');
+                Setting::set($settingKey, $path);
+            }
+        }
+
         return redirect()->back()->with('success', 'Branding settings updated successfully.');
     }
 
+    // ==========================================
+    // Contact Settings
+    // ==========================================
+    public function contact()
+    {
+        return view('admin.settings.contact');
+    }
+
+    public function contactUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'nullable|email|max:150',
+            'phone' => 'nullable|string|max:50',
+            'whatsapp' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:255',
+            'working_hours' => 'nullable|string|max:150',
+            'google_map' => 'nullable|url|max:500',
+        ]);
+
+        Setting::set('contact.email', $validated['email'] ?? '');
+        Setting::set('contact.phone', $validated['phone'] ?? '');
+        Setting::set('contact.whatsapp', $validated['whatsapp'] ?? '');
+        Setting::set('contact.address', $validated['address'] ?? '');
+        Setting::set('contact.working_hours', $validated['working_hours'] ?? '');
+        Setting::set('contact.google_map', $validated['google_map'] ?? '');
+
+        return redirect()->back()->with('success', 'Contact settings updated successfully.');
+    }
+
+    // ==========================================
+    // Helper Methods
+    // ==========================================
     private function syncFeatures(Package $package, string $detailsText): void
     {
         $package->features()->delete();
