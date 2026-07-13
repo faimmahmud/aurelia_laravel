@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
@@ -35,10 +36,13 @@ Route::middleware('auth')->group(function () {
 */
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::get('/dashboard', function () {
+
         if (auth()->user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
+
         return view('dashboard');
     })->name('dashboard');
 });
@@ -50,6 +54,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 */
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -71,13 +76,23 @@ Route::middleware(['auth', 'role:admin'])
         | Dashboard
         |--------------------------------------------------------------------------
         */
+
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Destinations
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource('destinations', DestinationController::class);
 
         /*
         |--------------------------------------------------------------------------
         | Bookings
         |--------------------------------------------------------------------------
         */
+
         Route::get('/bookings', [AdminController::class, 'bookings'])->name('bookings');
         Route::get('/bookings/{id}', [AdminController::class, 'bookingShow'])->name('bookings.show');
         Route::patch('/bookings/{id}', [AdminController::class, 'updateStatus'])->name('bookings.update');
@@ -88,6 +103,7 @@ Route::middleware(['auth', 'role:admin'])
         | Packages
         |--------------------------------------------------------------------------
         */
+
         Route::get('/packages', [AdminController::class, 'packages'])->name('packages');
         Route::get('/packages/create', [AdminController::class, 'packagesCreate'])->name('packages.create');
         Route::post('/packages', [AdminController::class, 'packagesStore'])->name('packages.store');
@@ -100,6 +116,7 @@ Route::middleware(['auth', 'role:admin'])
         | Branding Settings
         |--------------------------------------------------------------------------
         */
+
         Route::get('/settings/branding', [AdminController::class, 'branding'])->name('settings.branding');
         Route::post('/settings/branding', [AdminController::class, 'brandingUpdate'])->name('settings.branding.update');
 
@@ -108,8 +125,9 @@ Route::middleware(['auth', 'role:admin'])
         | Contact Settings
         |--------------------------------------------------------------------------
         */
+
         Route::get('/settings/contact', [AdminController::class, 'contact'])->name('settings.contact');
         Route::post('/settings/contact', [AdminController::class, 'contactUpdate'])->name('settings.contact.update');
-    }); // Admin Panel Group Ends Here
+    });
 
 require __DIR__ . '/auth.php';
