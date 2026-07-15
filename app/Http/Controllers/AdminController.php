@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\BookingAuditLog;
+use App\Models\Country;
+use App\Models\Destination;
 use App\Models\Package;
 use App\Models\PackageFeature;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -20,6 +23,10 @@ class AdminController extends Controller
             'pending' => Booking::where('booking_status', 'pending_review')->count(),
             'confirmed' => Booking::where('booking_status', 'confirmed')->count(),
             'revenue' => Booking::where('payment_status', 'paid')->sum('amount'),
+            'users' => User::count(),
+            'countries' => Country::count(),
+            'destinations' => Destination::count(),
+            'packages' => Package::count(),
         ];
 
         $bookings = Booking::latest()->paginate(10);

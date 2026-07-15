@@ -103,6 +103,15 @@
 
                     @auth
 
+                        @if (auth()->user()->role != 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                                    href="{{ route('dashboard') }}">
+                                    My Dashboard
+                                </a>
+                            </li>
+                        @endif
+
                         @if (auth()->user()->role == 'admin')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.dashboard') }}">

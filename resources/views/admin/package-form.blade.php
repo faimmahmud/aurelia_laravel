@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin')
 
 @php($pageTitle = ($package ? 'Edit Package' : 'Add Package') . ' | Aurelia Travel')
 

@@ -1,10 +1,8 @@
-@extends('layouts.admin')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="section-kicker">Admin</div>
 <h1 class="section-title mb-4">Control center</h1>
 
-{{-- Core stats --}}
+
 <div class="row g-3 mb-3">
   <div class="col-6 col-lg-3">
     <div class="stat-card">
@@ -12,7 +10,7 @@
         <span class="text-muted small text-uppercase">Total bookings</span>
         <span class="stat-icon"><i class="fa-solid fa-suitcase-rolling"></i></span>
       </div>
-      <div class="fs-3 fw-bold">{{ $stats['total'] }}</div>
+      <div class="fs-3 fw-bold"><?php echo e($stats['total']); ?></div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
@@ -21,7 +19,7 @@
         <span class="text-muted small text-uppercase">Pending review</span>
         <span class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></span>
       </div>
-      <div class="fs-3 fw-bold">{{ $stats['pending'] }}</div>
+      <div class="fs-3 fw-bold"><?php echo e($stats['pending']); ?></div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
@@ -30,7 +28,7 @@
         <span class="text-muted small text-uppercase">Confirmed</span>
         <span class="stat-icon"><i class="fa-solid fa-check-double"></i></span>
       </div>
-      <div class="fs-3 fw-bold">{{ $stats['confirmed'] }}</div>
+      <div class="fs-3 fw-bold"><?php echo e($stats['confirmed']); ?></div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
@@ -39,12 +37,12 @@
         <span class="text-muted small text-uppercase">Revenue (paid)</span>
         <span class="stat-icon"><i class="fa-solid fa-sack-dollar"></i></span>
       </div>
-      <div class="fs-3 fw-bold">${{ number_format($stats['revenue'], 2) }}</div>
+      <div class="fs-3 fw-bold">$<?php echo e(number_format($stats['revenue'], 2)); ?></div>
     </div>
   </div>
 </div>
 
-{{-- Site-wide control counts --}}
+
 <div class="row g-3 mb-4">
   <div class="col-6 col-lg-3">
     <div class="stat-card">
@@ -52,7 +50,7 @@
         <span class="text-muted small text-uppercase">Users</span>
         <span class="stat-icon"><i class="fa-solid fa-users"></i></span>
       </div>
-      <div class="fs-3 fw-bold">{{ $stats['users'] }}</div>
+      <div class="fs-3 fw-bold"><?php echo e($stats['users']); ?></div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
@@ -61,7 +59,7 @@
         <span class="text-muted small text-uppercase">Countries</span>
         <span class="stat-icon"><i class="fa-solid fa-globe"></i></span>
       </div>
-      <div class="fs-3 fw-bold">{{ $stats['countries'] }}</div>
+      <div class="fs-3 fw-bold"><?php echo e($stats['countries']); ?></div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
@@ -70,7 +68,7 @@
         <span class="text-muted small text-uppercase">Destinations</span>
         <span class="stat-icon"><i class="fa-solid fa-earth-asia"></i></span>
       </div>
-      <div class="fs-3 fw-bold">{{ $stats['destinations'] }}</div>
+      <div class="fs-3 fw-bold"><?php echo e($stats['destinations']); ?></div>
     </div>
   </div>
   <div class="col-6 col-lg-3">
@@ -79,16 +77,16 @@
         <span class="text-muted small text-uppercase">Packages</span>
         <span class="stat-icon"><i class="fa-solid fa-box-open"></i></span>
       </div>
-      <div class="fs-3 fw-bold">{{ $stats['packages'] }}</div>
+      <div class="fs-3 fw-bold"><?php echo e($stats['packages']); ?></div>
     </div>
   </div>
 </div>
 
-{{-- Quick control links --}}
+
 <h6 class="text-uppercase text-muted small letter-wide mb-3">Manage</h6>
 <div class="row g-3 mb-4">
   <div class="col-md-4">
-    <a href="{{ route('admin.users.index') }}" class="quick-link">
+    <a href="<?php echo e(route('admin.users.index')); ?>" class="quick-link">
       <span class="qi"><i class="fa-solid fa-users"></i></span>
       <div>
         <div class="fw-bold">Users</div>
@@ -97,7 +95,7 @@
     </a>
   </div>
   <div class="col-md-4">
-    <a href="{{ route('admin.countries.index') }}" class="quick-link">
+    <a href="<?php echo e(route('admin.countries.index')); ?>" class="quick-link">
       <span class="qi"><i class="fa-solid fa-globe"></i></span>
       <div>
         <div class="fw-bold">Countries</div>
@@ -106,7 +104,7 @@
     </a>
   </div>
   <div class="col-md-4">
-    <a href="{{ route('admin.destinations.index') }}" class="quick-link">
+    <a href="<?php echo e(route('admin.destinations.index')); ?>" class="quick-link">
       <span class="qi"><i class="fa-solid fa-earth-asia"></i></span>
       <div>
         <div class="fw-bold">Destinations</div>
@@ -115,7 +113,7 @@
     </a>
   </div>
   <div class="col-md-4">
-    <a href="{{ route('admin.packages') }}" class="quick-link">
+    <a href="<?php echo e(route('admin.packages')); ?>" class="quick-link">
       <span class="qi"><i class="fa-solid fa-suitcase"></i></span>
       <div>
         <div class="fw-bold">Packages</div>
@@ -124,7 +122,7 @@
     </a>
   </div>
   <div class="col-md-4">
-    <a href="{{ route('admin.bookings') }}" class="quick-link">
+    <a href="<?php echo e(route('admin.bookings')); ?>" class="quick-link">
       <span class="qi"><i class="fa-solid fa-calendar-check"></i></span>
       <div>
         <div class="fw-bold">Bookings</div>
@@ -133,7 +131,7 @@
     </a>
   </div>
   <div class="col-md-4">
-    <a href="{{ route('admin.settings.branding') }}" class="quick-link">
+    <a href="<?php echo e(route('admin.settings.branding')); ?>" class="quick-link">
       <span class="qi"><i class="fa-solid fa-palette"></i></span>
       <div>
         <div class="fw-bold">Branding & Contact</div>
@@ -143,10 +141,10 @@
   </div>
 </div>
 
-{{-- Recent bookings --}}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h6 class="text-uppercase text-muted small letter-wide mb-0">Recent bookings</h6>
-  <a href="{{ route('admin.bookings') }}" class="btn btn-outline-dark btn-sm rounded-pill px-3">View all bookings</a>
+  <a href="<?php echo e(route('admin.bookings')); ?>" class="btn btn-outline-dark btn-sm rounded-pill px-3">View all bookings</a>
 </div>
 
 <div class="card">
@@ -164,24 +162,27 @@
         </tr>
       </thead>
       <tbody>
-      @forelse ($bookings as $b)
+      <?php $__empty_1 = true; $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $b): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
         <tr>
-          <td>{{ $b->booking_ref }}</td>
-          <td>{{ $b->customer_name }}<br><span class="text-muted small">{{ $b->customer_email }}</span></td>
-          <td>{{ $b->package_name }}</td>
-          <td>{{ $b->travel_date }}</td>
-          <td>{{ $b->currency }} {{ number_format($b->amount, 2) }}</td>
-          <td><span class="badge bg-{{ $b->paymentBadgeClass() }}">{{ $b->payment_status }}</span></td>
-          <td><span class="badge bg-{{ $b->statusBadgeClass() }}">{{ $b->booking_status }}</span></td>
+          <td><?php echo e($b->booking_ref); ?></td>
+          <td><?php echo e($b->customer_name); ?><br><span class="text-muted small"><?php echo e($b->customer_email); ?></span></td>
+          <td><?php echo e($b->package_name); ?></td>
+          <td><?php echo e($b->travel_date); ?></td>
+          <td><?php echo e($b->currency); ?> <?php echo e(number_format($b->amount, 2)); ?></td>
+          <td><span class="badge bg-<?php echo e($b->paymentBadgeClass()); ?>"><?php echo e($b->payment_status); ?></span></td>
+          <td><span class="badge bg-<?php echo e($b->statusBadgeClass()); ?>"><?php echo e($b->booking_status); ?></span></td>
         </tr>
-      @empty
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
         <tr><td colspan="7" class="text-center text-muted py-4">No bookings yet.</td></tr>
-      @endforelse
+      <?php endif; ?>
       </tbody>
     </table>
   </div>
 </div>
 <div class="mt-3">
-  {{ $bookings->links() }}
+  <?php echo e($bookings->links()); ?>
+
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\faim\laravel-final-project\aurelia_laravel\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>

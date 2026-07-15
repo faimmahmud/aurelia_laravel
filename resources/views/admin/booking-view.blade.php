@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin')
 
 @php($pageTitle = 'Booking ' . $booking->booking_ref . ' | Aurelia Travel')
 

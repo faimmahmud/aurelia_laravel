@@ -104,6 +104,15 @@
 
                     <?php if(auth()->guard()->check()): ?>
 
+                        <?php if(auth()->user()->role != 'admin'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo e(request()->routeIs('dashboard') ? 'active' : ''); ?>"
+                                    href="<?php echo e(route('dashboard')); ?>">
+                                    My Dashboard
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
                         <?php if(auth()->user()->role == 'admin'): ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route('admin.dashboard')); ?>">
@@ -288,4 +297,4 @@
 </body>
 
 </html>
-<?php /**PATH C:\xampp\htdocs\faim\trash\aurelia_laravel\resources\views/layouts/master.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\faim\laravel-final-project\aurelia_laravel\resources\views/layouts/master.blade.php ENDPATH**/ ?>

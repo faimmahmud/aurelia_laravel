@@ -302,8 +302,8 @@
             </div>
             <nav class="nav">
 
-                <a href="{{ route('admin.dashboard') }}"
-                    class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <a href="<?php echo e(route('admin.dashboard')); ?>"
+                    class="<?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                     <i class="fa-solid fa-gauge"></i>
                     Dashboard
                 </a>
@@ -314,26 +314,26 @@
                     TRAVEL MANAGEMENT
                 </small>
 
-                <a href="{{ route('admin.destinations.index') }}"
-                    class="{{ request()->routeIs('admin.destinations*') ? 'active' : '' }}">
+                <a href="<?php echo e(route('admin.destinations.index')); ?>"
+                    class="<?php echo e(request()->routeIs('admin.destinations*') ? 'active' : ''); ?>">
                     <i class="fa-solid fa-earth-asia"></i>
                     Destinations
                 </a>
 
-                <a href="{{ route('admin.countries.index') }}"
-                    class="{{ request()->routeIs('admin.countries*') ? 'active' : '' }}">
+                <a href="<?php echo e(route('admin.countries.index')); ?>"
+                    class="<?php echo e(request()->routeIs('admin.countries*') ? 'active' : ''); ?>">
                     <i class="fa-solid fa-globe"></i>
                     Countries
                 </a>
 
-                <a href="{{ route('admin.packages') }}"
-                    class="{{ request()->routeIs('admin.packages*') ? 'active' : '' }}">
+                <a href="<?php echo e(route('admin.packages')); ?>"
+                    class="<?php echo e(request()->routeIs('admin.packages*') ? 'active' : ''); ?>">
                     <i class="fa-solid fa-suitcase"></i>
                     Packages
                 </a>
 
-                <a href="{{ route('admin.bookings') }}"
-                    class="{{ request()->routeIs('admin.bookings*') ? 'active' : '' }}">
+                <a href="<?php echo e(route('admin.bookings')); ?>"
+                    class="<?php echo e(request()->routeIs('admin.bookings*') ? 'active' : ''); ?>">
                     <i class="fa-solid fa-calendar-check"></i>
                     Bookings
                 </a>
@@ -344,8 +344,8 @@
                     PEOPLE
                 </small>
 
-                <a href="{{ route('admin.users.index') }}"
-                    class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                <a href="<?php echo e(route('admin.users.index')); ?>"
+                    class="<?php echo e(request()->routeIs('admin.users*') ? 'active' : ''); ?>">
                     <i class="fa-solid fa-users"></i>
                     Users
                 </a>
@@ -356,20 +356,20 @@
                     COMPANY
                 </small>
 
-                <a href="{{ route('admin.settings.branding') }}">
+                <a href="<?php echo e(route('admin.settings.branding')); ?>">
                     <i class="fa-solid fa-palette"></i>
                     Branding
                 </a>
 
-                <a href="{{ route('admin.settings.contact') }}">
+                <a href="<?php echo e(route('admin.settings.contact')); ?>">
                     <i class="fa-solid fa-address-book"></i>
                     Contact
                 </a>
 
                 <div class="nav-spacer"></div>
 
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                    <?php echo csrf_field(); ?>
                     <button type="submit" class="logout-btn">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Logout
@@ -392,17 +392,17 @@
 
                 <div class="user-chip">
                     <i class="fa-solid fa-circle-user"></i>
-                    <strong>{{ auth()->user()->name }}</strong>
+                    <strong><?php echo e(auth()->user()->name); ?></strong>
                 </div>
 
             </nav>
 
             <div class="content">
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </div>
 
             <footer>
-                &copy; {{ date('Y') }} Aurelia Travel. All Rights Reserved.
+                &copy; <?php echo e(date('Y')); ?> Aurelia Travel. All Rights Reserved.
             </footer>
 
         </main>
@@ -432,3 +432,4 @@
 </body>
 
 </html>
+<?php /**PATH C:\xampp\htdocs\faim\laravel-final-project\aurelia_laravel\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

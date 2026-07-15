@@ -34,4 +34,4 @@ unset($__defined_vars, $__key, $__value); ?>
 
     </div>
 <?php endif; ?>
-<?php /**PATH C:\xampp\htdocs\faim\laravel-final-project\aurelia_laravel\aurelia_laravel\resources\views/components/auth-session-status.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\faim\laravel-final-project\aurelia_laravel\resources\views/components/auth-session-status.blade.php ENDPATH**/ ?>

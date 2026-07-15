@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +28,7 @@ Route::get('/world', [FrontendController::class, 'world'])->name('world');
 */
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/booking', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 });
@@ -37,14 +41,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/dashboard', function () {
-
-        if (auth()->user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
-
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 });
 
 /*
@@ -81,6 +78,14 @@ Route::middleware(['auth', 'role:admin'])
 
         /*
         |--------------------------------------------------------------------------
+        | Countries
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource('countries', CountryController::class);
+
+        /*
+        |--------------------------------------------------------------------------
         | Destinations
         |--------------------------------------------------------------------------
         */
@@ -110,6 +115,16 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/packages/{id}/edit', [AdminController::class, 'packagesEdit'])->name('packages.edit');
         Route::put('/packages/{id}', [AdminController::class, 'packagesUpdate'])->name('packages.update');
         Route::delete('/packages/{id}', [AdminController::class, 'packagesDestroy'])->name('packages.destroy');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Users
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::patch('/users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
+        Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 
         /*
         |--------------------------------------------------------------------------
